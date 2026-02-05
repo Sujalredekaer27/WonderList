@@ -9,8 +9,10 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const {listingSchema} = require("./schema.js");
+const {reviewSchema} = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const Review = require("./models/review.js")
 
 app.engine("ejs", ejsMate);
 app.set("view engine","ejs");
@@ -37,6 +39,16 @@ app.get("/",(req,res) => {
 
 const validateListing = (req,res,next) => {
     let {error} = listingSchema.validate(req.body);
+    if(error) {
+        let arrMsg = error.details.map((el)=>el.message).join(",");
+        throw new ExpressError(400,errMsg)
+    } else {
+        next();
+    }
+}
+
+const validateReview = (req,res,next) => {
+    let {error} = reviewSchema.validate(req.body);
     if(error) {
         let arrMsg = error.details.map((el)=>el.message).join(",");
         throw new ExpressError(400,errMsg)
@@ -81,7 +93,7 @@ app.post("/listings",validateListing, wrapAsync( async (req, res, next) => {
 //Show Route
 app.get("/listings/:id",wrapAsync (async (req,res) => {
     let {id} = req.params;
-    let listing = await Listing.findById(id);
+    let listing = await Listing.findById(id).populate("reviews");
     console.log(listing);
     res.render("listing/show.ejs",{listing});
 }));
@@ -107,7 +119,21 @@ app.put("/listings/:id",validateListing,wrapAsync (async (req,res) => {
 app.delete("/listings/:id",wrapAsync (async(req,res) => {
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
+    res.redirect("/listings/:id");
+}));
+
+//Review Route
+app.post("/listings/:id/reviews",validateReview, wrapAsync (async(req,res) => {
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+    
+    listing.reviews.push(newReview);
+
+    await newReview.save();
+    await listing.save();
+
+    console.log("new review saved");
+    res.redirect(`/listings/${req.params.id}`);
 }));
 
 app.all(/.*$/, (req, res, next) => {
