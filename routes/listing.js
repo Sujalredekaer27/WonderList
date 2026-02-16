@@ -4,7 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const {listingSchema, reviewSchema} = require("../schema.js");
 const Listing = require("../models/listing.js");
-const {isLoggedIn} = require("../middleware.js");
+const {isLoggedIn, isOwner} = require("../middleware.js");
 
 const validateListing = (req,res,next) => {
     let {error} = listingSchema.validate(req.body);
@@ -54,7 +54,7 @@ router.get("/:id",wrapAsync (async (req,res) => {
 }));
 
 //Edit Route
-router.get("/:id/edit",isLoggedIn,wrapAsync (async (req,res) => {
+router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync (async (req,res) => {
     let {id} = req.params;
     let listing = await Listing.findById(id);
     if(!listing){
@@ -65,7 +65,7 @@ router.get("/:id/edit",isLoggedIn,wrapAsync (async (req,res) => {
 }));
 
 //Update Route
-router.put("/:id",isLoggedIn,validateListing,wrapAsync (async (req,res) => {
+router.put("/:id",isLoggedIn,isOwner,validateListing,wrapAsync (async (req,res) => {
     if(!req.body.listing) {
         throw new ExpressError(400,"Enter a valid data for listing")
     }
@@ -76,7 +76,7 @@ router.put("/:id",isLoggedIn,validateListing,wrapAsync (async (req,res) => {
 }));
 
 //Delete Route
-router.delete("/:id",isLoggedIn,wrapAsync (async(req,res) => {
+router.delete("/:id",isLoggedIn,isOwner,wrapAsync (async(req,res) => {
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
     req.flash("success","listing deleted!");
