@@ -9,31 +9,36 @@
 
         <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
 
+            <!-- title -->
             <div class="mb-4">
                 <label for="title" class="form-label">Title</label>
                 <input name="listing[title]" placeholder="Enter Title" class="form-control" required>
                 <div class="valid-feedback">Title looks good!</div>
             </div>
 
+            <!-- description -->
             <div class="mb-4">
-                <label for="title" class="form-label">Descripation</label>
+                <label for="description" class="form-label">Descripation</label>
                 <textarea name="listing[description]" rows="10" cols="40" placeholder="Enter description" class="form-control" required></textarea>
                 <div class="invalid-feedback">Please enter a short (small) description </div>
             </div>
 
+            <!-- image -->
             <div class="mb-4">
                 <label for="image" class="form-label">Upload Image</label>
-                <input name="listing[image]" type="file" class="form-control">
+                <input name="listing[image]" type="file" class="form-control" required>
             </div>
 
             <div class="row">
 
+            <!-- price -->
             <div class="mb-4 col-md-4">
                 <label for="price" class="form-label">Price</label>
                 <input name="listing[price]" placeholder="Enter Price" class="form-control" required>
                 <div class="invalid-feedback">Price should be Valid</div>
             </div>
 
+            <!-- location -->
             <div class="mb-4 col-md-8">
                 <label for="location" class="form-label">Location</label>
                 <input name="listing[location]" placeholder="Enter Location" type="text" class="form-control" required>
@@ -42,6 +47,7 @@
 
             </div>
 
+            <!-- country -->
             <div class="mb-4">
                 <label for="country" class="form-label">Country</label>
                 <input name="listing[country]" placeholder="Enter Country" type="text" class="form-control" required>
