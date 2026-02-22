@@ -78,8 +78,9 @@
 
                             <hr>
                             <% } %>
-                                <p><b>All Reviews</b></p>
+                            <% if(listing.reviews.length > 0) { %>
                                 <div class="row">
+                                    <p><b>All Reviews</b></p>
                                     <% for(review of listing.reviews) { %>
                                         <div class="card col-md-5 ms-3 mb-3">
                                             <div class="card-body mt-2">
@@ -99,7 +100,14 @@
                                             </form>
                                         </div>
                                         <% } %>
-                                </div>
+                                    </div>
+                                    <% } %>
+                    </div>
+                    <div class="col-8 offset-2 mb-3">
+                        <h3>Where you'll be</h3>
+                        <div id="map">
+                                        
+                        </div>
                     </div>
 
         </div>

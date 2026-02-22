@@ -45,7 +45,9 @@ module.exports.renderEditForm = async (req,res) => {
         req.flash("error","Listing you requested for does not exist!");
         return res.redirect("/listings");
     }
-    res.render("listing/edit.ejs",{listing});
+    let originalImage = listing.image.url;
+    originalImage.replace("/upload","/upload/h_300,w_200");
+    res.render("listing/edit.ejs",{listing,originalImage});
 };
 
 module.exports.updateListing = async (req,res) => {
