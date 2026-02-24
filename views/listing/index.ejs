@@ -87,13 +87,19 @@
             <div>
                 <i class="fa-regular fa-star"></i>
             </div>
-            <p>favourite</p>
+            <p>Favourite</p>
         </div>
         <div class="filter">
             <div>
                 <i class="fa-solid fa-leaf"></i>
             </div>
             <p>Nature</p>
+        </div>
+        <div class="tax-toggle">
+            <div class="form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Display total after Taxes</label>
+            </div>
         </div>
     </div>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
@@ -114,5 +120,10 @@
                 <% } %>
         </div>
 
-
+        <script>
+            let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+            taxSwitch.addEventListener("click",()=>{
+                console.log("hehe");
+            })
+        </script>
     </body>
