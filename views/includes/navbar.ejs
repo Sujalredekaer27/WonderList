@@ -1,13 +1,104 @@
+<style>
+  /* .search-btn{
+    background-color: #fe424d;
+    color: aliceblue;
+    border-radius: 26px;
+    padding: 0 1rem 0 1rem;
+  }
+
+  .search-btn{
+    background-color: #fe424d;
+    color: aliceblue;
+  }
+
+  .search-btn i{
+    display: inline;
+    margin-right: 0.5rem;
+  }
+
+  .search-input{
+    border-radius: 26px;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    font-size: 1rem;
+  } */
+   #filters {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.filter-options {
+  display: flex;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  flex-grow: 1;
+  align-items: center;
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.filter-options::-webkit-scrollbar {
+  display: none;
+}
+
+.filter {
+  text-align: center;
+  margin-right: 2rem;
+  margin-top: 1rem;
+  opacity: 0.7;
+  cursor: pointer;
+  min-width: fit-content; /* Prevents text from wrapping */
+}
+
+.filter:hover {
+  opacity: 1;
+  border-bottom: 2px solid black;
+}
+
+.filter p {
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.tax-toggle {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  height: 3rem;
+  padding: 0 1rem;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* On small screens, we might want to hide the tax label or the toggle */
+@media (max-width: 992px) {
+  .tax-toggle {
+    display: none; /* Usually hidden on mobile to prioritize filters */
+  }
+}
+</style>
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  
   <div class="container-fluid">
     <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">Explore</a>
       </div>
+
+      <div class="navbar-nav ms-auto">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2 search-input" type="search" placeholder="Search destinations">
+          <button class="btn search-btn type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+      </div>
+
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Airbnb your Home</a>
         <% if(!currUser) { %>
@@ -18,6 +109,7 @@
         <a class="nav-link" href="/logout"><b>Logout</b></a>
         <% } %>
       </div>
+
     </div>
   </div>
 </nav>

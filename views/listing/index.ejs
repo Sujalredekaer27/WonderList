@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate") %>
     <style>
-
+        /* 
         .filter{
             margin-top: 2rem;
             text-align: center;
@@ -35,80 +35,140 @@
             margin-left: 2rem;
             display: flex;
             align-items: center;
+        } */
+        #filters {
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            background-color: white;
+            position: sticky;
+            /* Optional: keeps filters visible while scrolling listings */
+            top: 66px;
+            /* Adjust based on your navbar height */
+            z-index: 10;
+        }
+
+        /* This allows the icons to scroll while the toggle stays fixed */
+        .filter-options {
+            display: flex;
+            overflow-x: auto;
+            flex-grow: 1;
+            align-items: center;
+        }
+
+        /* Hide scrollbar for a cleaner look (Chrome/Safari/Edge) */
+        .filter-options::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Firefox scrollbar hiding */
+        .filter-options {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .filter {
+            text-align: center;
+            margin-right: 2rem;
+            margin-top: 2rem;
+            opacity: 0.6;
+            min-width: fit-content;
+            /* Critical: prevents text wrapping within a filter */
+        }
+
+        .filter:hover {
+            opacity: 1;
+            cursor: pointer;
+            border-bottom: 2px solid black;
+            /* Nice feedback touch */
+        }
+
+        .tax-toggle {
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            border-radius: 1rem;
+            height: 3.25rem;
+            padding: 1rem;
+            margin-left: 2rem;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            /* Prevents toggle text from breaking into 2 lines */
         }
     </style>
     <!-- <body> -->
-        
-        <!-- <h3>All Listing</h3> -->
-        <!-- <form method="GET" action="/listings/new">
+
+    <!-- <h3>All Listing</h3> -->
+    <!-- <form method="GET" action="/listings/new">
         <button>Create New Listing</button>
     </form> -->
     <div id="filters">
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-fire"></i>
+        <div class="filter-options">
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <p>Trending</p>
             </div>
-            <p>Trending</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-bed"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-bed"></i>
+                </div>
+                <p>Rooms</p>
             </div>
-            <p>Rooms</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-mountain-city"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-mountain-city"></i>
+                </div>
+                <p>Iconic Cities</p>
             </div>
-            <p>Iconic Cities</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-mountain"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-mountain"></i>
+                </div>
+                <p>Mountains</p>
             </div>
-            <p>Mountains</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-brands fa-fort-awesome"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-brands fa-fort-awesome"></i>
+                </div>
+                <p>Castles</p>
             </div>
-            <p>Castles</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-person-swimming"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-person-swimming"></i>
+                </div>
+                <p>Amazing Pools </p>
             </div>
-            <p>Amazing Pools </p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-campground"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-campground"></i>
+                </div>
+                <p>Camping</p>
             </div>
-            <p>Camping</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-wheat-awn"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+                <p>Farms</p>
             </div>
-            <p>Farms</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-regular fa-snowflake"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-regular fa-snowflake"></i>
+                </div>
+                <p>Arctic</p>
             </div>
-            <p>Arctic</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-igloo"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-igloo"></i>
+                </div>
+                <p>Domes</p>
             </div>
-            <p>Domes</p>
-        </div>
-        <div class="filter">
-            <div>
-                <i class="fa-solid fa-ship"></i>
+            <div class="filter">
+                <div>
+                    <i class="fa-solid fa-ship"></i>
+                </div>
+                <p>Boats</p>
             </div>
-            <p>Boats</p>
         </div>
         <div class="tax-toggle">
             <div class="form-check-reverse form-switch">
@@ -117,35 +177,35 @@
             </div>
         </div>
     </div>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
-            <% for(let listing of allListing){ %>
-                <a href="/listings/<%= listing._id %>" class="listing-link">
-                    <div class="card col listing-card">
-                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
-                            style="height: 20rem">
-                        <div class="card-img-overlay"></div>
-                        <div class="card-body">
-                            <p class="card-text"><B>
-                                    <%= listing.title %>
-                                </B> <br>
-                                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night<i class="tax-info">&nbsp; &nbsp; +18% GST</i></p>
-                        </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
+        <% for(let listing of allListing){ %>
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card col listing-card">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem">
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <p class="card-text"><B>
+                                <%= listing.title %>
+                            </B> <br>
+                            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night<i class="tax-info">&nbsp;
+                                    &nbsp; +18% GST</i></p>
                     </div>
-                </a>
-                <% } %>
-        </div>
+                </div>
+            </a>
+            <% } %>
+    </div>
 
-        <script>
-            let taxSwitch = document.getElementById("flexSwitchCheckDefault");
-            taxSwitch.addEventListener("click",()=>{
-                let taxInfo = document.getElementsByClassName("tax-info");
-                for(info of taxInfo){
-                    if(info.style.display != "inline"){
-                        info.style.display = "inline";
-                    } else {
-                        info.style.display = "none";
-                    }
+    <script>
+        let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let taxInfo = document.getElementsByClassName("tax-info");
+            for (info of taxInfo) {
+                if (info.style.display != "inline") {
+                    info.style.display = "inline";
+                } else {
+                    info.style.display = "none";
                 }
-            })
-        </script>
+            }
+        })
+    </script>
     <!-- </body> -->
