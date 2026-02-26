@@ -98,8 +98,8 @@ body{
 }
 
 /* Show Page */
-.show-img{
-    height: 40vh;
+.show-image{
+    height: 60vh !important;
 }
 
 .btns{
