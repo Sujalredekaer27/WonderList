@@ -11,6 +11,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 
 const passport = require("passport");
@@ -43,20 +44,21 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"/public")));
 
-// main()
-//     .then(() => {
-//         console.log("Connected Successfully To DataBase");
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     })
+console.log("MongoStore Object:", MongoStore);
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24*3600,
+});
 
-// async function main() {
-//     await mongoose.connect(dbUrl);
-// }
-
+store.on("error", (err) => {
+    console.log("ERROR in MONGO SESSION STORE",err);
+});
 const sessionOptions = {
-    secret: "mysupersecertcode",
+    store: store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -65,10 +67,6 @@ const sessionOptions = {
         httpOnly: true,
     }
 }
-
-// app.get("/",(req,res) => {
-//     res.send("hihe");
-// });
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -106,7 +104,6 @@ app.all(/.*$/, (req, res, next) => {
 app.use((err,req,res,next) => {
     let {statusCode=500, message="Something went wrong!"} = err;
     res.status(statusCode).render("error.ejs",{message});
-    // res.status(statusCode).send(message);
 })
 
 app.listen(port,() => {
